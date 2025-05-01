@@ -1,0 +1,106 @@
+<div class="quiz-container">
+  <!-- Question Section -->
+  <p-card *ngIf="!isQuizCompleted" [header]="currentQuestion.text" styleClass="question-card">
+    <!-- Progress Bar -->
+    <div class="progress-section">
+      <p-progressBar [value]="progressValue" [showValue]="false"></p-progressBar>
+      <span class="progress-text">{{ progressText }}</span>
+    </div>
+
+    <!-- Feedback after answering -->
+    <div *ngIf="showFeedback" class="feedback-container">
+      <div class="feedback-message" [ngClass]="isCorrectAnswer ? 'correct-feedback' : 'incorrect-feedback'">
+        <i class="pi" [ngClass]="isCorrectAnswer ? 'pi-check-circle' : 'pi-times-circle'"></i>
+        <div class="feedback-text">
+          <h3>{{ isCorrectAnswer ? 'Correct!' : 'Incorrect!' }}</h3>
+          <p *ngIf="!isCorrectAnswer">{{ getCorrectAnswerText() }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Options -->
+    <div class="options-container">
+      <div *ngFor="let option of currentQuestion.options" 
+           class="option-item" 
+           [ngClass]="getOptionClass(option.id)"
+           (click)="onOptionSelect(option.id)">
+        <div class="option-content">
+          <span class="radio-circle" [class.selected]="selectedOption === option.id"></span>
+          <span class="option-text">{{ option.text }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <ng-template pTemplate="footer">
+      <div class="button-container">
+        <button 
+          class="p-button p-button-primary" 
+          [disabled]="disableSubmit"
+          (click)="submitAnswer()">
+          <i class="pi pi-check"></i>
+          <span>Submit Answer</span>
+        </button>
+      </div>
+    </ng-template>
+  </p-card>
+
+  <!-- Quiz Results Section - Displayed directly on the page instead of in a dialog -->
+  <p-card *ngIf="isQuizCompleted && quizResults" header="Quiz Results" styleClass="results-card">
+    <div class="results-container">
+      <div class="results-header">
+        <h2>You Scored</h2>
+        <div class="score-display">
+          <span class="score">{{ quizResults.correctAnswers }}/{{ quizResults.totalQuestions }}</span>
+          <span class="percentage">({{ quizResults.percentageScore }}%)</span>
+        </div>
+      </div>
+
+      <hr class="p-divider" />
+
+      <div class="results-details">
+        <h3>Question Summary</h3>
+        <div *ngFor="let item of quizResults.questionsWithAnswers; let i = index" class="result-item">
+          <div class="question-header">
+            <div class="question-number">Question {{ i + 1 }}</div>
+            <div class="question-text">{{ item.question }}</div>
+          </div>
+          <div class="answer-details">
+            <div class="answer-row">
+              <div class="answer-label">Your answer:</div>
+              <div class="chip-container">
+                <span class="p-chip" [ngClass]="item.isCorrect ? 'correct-chip' : 'incorrect-chip'">
+                  {{ item.userAnswer }}
+                </span>
+              </div>
+            </div>
+            <div *ngIf="!item.isCorrect" class="answer-row">
+              <div class="answer-label">Correct answer:</div>
+              <div class="chip-container">
+                <span class="p-chip correct-chip">
+                  {{ item.correctAnswer }}
+                </span>
+              </div>
+            </div>
+          </div>
+          <hr class="p-divider" *ngIf="i < quizResults.questionsWithAnswers.length - 1" />
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <button 
+          class="p-button p-button-secondary" 
+          (click)="navigateToHome()">
+          <i class="pi pi-home"></i>
+          <span>Back to Home</span>
+        </button>
+        <button 
+          class="p-button p-button-primary" 
+          (click)="restartQuiz()">
+          <i class="pi pi-refresh"></i>
+          <span>Restart Quiz</span>
+        </button>
+      </div>
+    </div>
+  </p-card>
+</div>

@@ -1,0 +1,18 @@
+<div class="app-container" [ngClass]="{'dark-theme': isDarkMode}">
+  <header>
+    <div class="header-content">
+      <h1>{{ title }}</h1>
+      <div class="theme-toggle" (click)="toggleTheme()" title="Toggle dark/light mode">
+        <i class="pi" [ngClass]="isDarkMode ? 'pi-sun' : 'pi-moon'"></i>
+      </div>
+    </div>
+  </header>
+  
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+  
+  <footer>
+    <p>&copy; 2025 Interactive Quiz App</p>
+  </footer>
+</div>

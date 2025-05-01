@@ -1,0 +1,52 @@
+<div class="home-container">
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">Welcome to the Angular Quiz!</h1>
+      <p class="hero-description">
+        Test your knowledge of Angular concepts and features with our interactive quiz.
+        Answer questions, track your progress, and see how well you know the Angular framework.
+      </p>
+      <div class="action-buttons">
+        <a routerLink="/quiz" class="p-button p-button-primary start-button">
+          <span class="p-button-text">Start Quiz</span>
+          <i class="pi pi-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="features-section">
+    <h2 class="section-title">Quiz Features</h2>
+    <div class="features-grid">
+      <div class="p-card feature-card" *ngFor="let feature of features">
+        <div class="p-card-body">
+          <div class="p-card-title">{{ feature.title }}</div>
+          <div class="p-card-content">
+            <p>{{ feature.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="info-section">
+    <h2 class="section-title">About This Quiz</h2>
+    <div class="p-card info-card">
+      <div class="p-card-body">
+        <div class="p-card-content">
+          <p>
+            This quiz consists of 10 questions covering various Angular topics including components, services, 
+            data binding, TypeScript features, and more. Each question offers multiple-choice answers.
+          </p>
+          <p>
+            At the end of the quiz, you'll receive a detailed breakdown of your performance, 
+            showing which questions you answered correctly and which ones you missed.
+          </p>
+          <p>
+            Ready to test your Angular knowledge? Click the Start Quiz button to begin!
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
